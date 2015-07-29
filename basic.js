@@ -1,11 +1,47 @@
-var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
+var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight,{backgroundColor : 0x1099bb});
 document.body.appendChild(renderer.view);
+
+window.addEventListener("resize", onresize);
+
+var w = window.innerWidth;
+var h = window.innerHeight;
+
+window.onresize = function (event){
+    w = window.innerWidth;
+    h = window.innerHeight;
+
+    //this part resizes the canvas but keeps ratio the same
+    renderer.view.style.width = w + "px";
+    renderer.view.style.height = h + "px";
+
+    //this part adjusts the ratio:
+    renderer.resize(w,h);
+
+    bunny.position.y = h-100;
+    bunny.position.x = w/2;
+
+    bg.width = w;
+    bg2.width = w;
+    bg3.width = w;
+
+    bg.height = h;
+    bg2.position.y = h-160;
+    bg3.position.y = h-960;
+}
 
 // create the root of the scene graph
 var stage = new PIXI.Container();
 
 // create a texture from an image path
 var texture = PIXI.Texture.fromImage('./zach.gif');
+var bg_texture = PIXI.Texture.fromImage('./BG.jpg');
+var bg2_texture = PIXI.Texture.fromImage('./BG_2.png');
+var bg3_texture = PIXI.Texture.fromImage('./BG_3.png');
+
+
+var bg = new PIXI.extras.TilingSprite(bg_texture, renderer.width, renderer.height);
+var bg2 = new PIXI.extras.TilingSprite(bg2_texture, renderer.width, 160);
+var bg3 = new PIXI.extras.TilingSprite(bg3_texture, renderer.width, 960);
 
 // create a new Sprite using the texture
 var bunny = new PIXI.Sprite(texture);
@@ -23,21 +59,27 @@ var style = {
 
 var basicText = new PIXI.Text('Zachary McNellis', style);
 basicText.x = 30;
-basicText.y = 180;
+basicText.y = 0;
 
 // center the sprite's anchor point
 bunny.anchor.x = 0.5;
 bunny.anchor.y = 0.5;
 
 // move the sprite to the center of the screen
-bunny.position.x = 370;
-bunny.position.y = 300;
+bunny.position.x = w/2;
+bunny.position.y = h-100;
 
 bunny.scale.x = 0.4;
 bunny.scale.y = 0.4;
 
 bunny.xVel = 0.0;
 
+bg2.position.y = h-160;
+bg3.position.y = h-960;
+
+stage.addChild(bg);
+stage.addChild(bg3);
+stage.addChild(bg2);
 stage.addChild(basicText);
 stage.addChild(bunny);
 
