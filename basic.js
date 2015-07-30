@@ -31,6 +31,7 @@ window.onresize = function (event){
 
 // create the root of the scene graph
 var stage = new PIXI.Container();
+var myContainer = new PIXI.DisplayObjectContainer();
 
 // create a texture from an image path
 var texture = PIXI.Texture.fromImage('./zach.gif');
@@ -39,9 +40,9 @@ var bg2_texture = PIXI.Texture.fromImage('./BG_2.png');
 var bg3_texture = PIXI.Texture.fromImage('./BG_3.png');
 
 
-var bg = new PIXI.extras.TilingSprite(bg_texture, renderer.width, renderer.height);
-var bg2 = new PIXI.extras.TilingSprite(bg2_texture, renderer.width, 160);
-var bg3 = new PIXI.extras.TilingSprite(bg3_texture, renderer.width, 960);
+var bg = new PIXI.extras.TilingSprite(bg_texture, 100000, renderer.height);
+var bg2 = new PIXI.extras.TilingSprite(bg2_texture, 100000, 160);
+var bg3 = new PIXI.extras.TilingSprite(bg3_texture, 100000, 960);
 
 // create a new Sprite using the texture
 var bunny = new PIXI.Sprite(texture);
@@ -77,11 +78,13 @@ bunny.xVel = 0.0;
 bg2.position.y = h-160;
 bg3.position.y = h-960;
 
-stage.addChild(bg);
-stage.addChild(bg3);
-stage.addChild(bg2);
-stage.addChild(basicText);
-stage.addChild(bunny);
+myContainer.addChild(bg);
+myContainer.addChild(bg3);
+myContainer.addChild(bg2);
+myContainer.addChild(basicText);
+myContainer.addChild(bunny);
+
+stage.addChild(myContainer);
 
 // start animating
 animate();
@@ -130,6 +133,9 @@ function animate() {
     requestAnimationFrame(animate);
 
     bunny.position.x += bunny.xVel;
+    bg.position.x -= 2;
+    bg2.position.x -= 8;
+    bg3.position.x -= 5;
 
 	//Capture the keyboard arrow keys
 	var left = keyboard(37),
