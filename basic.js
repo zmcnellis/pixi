@@ -20,10 +20,6 @@ window.onresize = function (event){
     bunny.position.y = h-100;
     bunny.position.x = w/2;
 
-    bg.width = w;
-    bg2.width = w;
-    bg3.width = w;
-
     bg.height = h;
     bg2.position.y = h-160;
     bg3.position.y = h-960;
