@@ -27,7 +27,7 @@ window.onresize = function (event){
 
 // create the root of the scene graph
 var stage = new PIXI.Container();
-var myContainer = new PIXI.DisplayObjectContainer();
+var myContainer = new PIXI.Container();
 
 // create a texture from an image path
 var texture = PIXI.Texture.fromImage('./zach.gif');
@@ -96,6 +96,69 @@ stage.addChild(myContainer);
 
 var startTime = Date.now();
 
+//Capture the keyboard arrow keys
+var left = keyboard(37),
+	up = keyboard(38),
+	right = keyboard(39),
+	down = keyboard(40);
+
+
+//Left arrow key `press` method
+left.press = function() {
+	bunny.xVel = 0.0;
+    bg.xVel = -2.0;
+    bg2.xVel = -8.0;
+    bg3.xVel = -5.0;
+
+//Change the cat's velocity when the key is pressed
+
+};
+
+//Left arrow key `release` method
+left.release = function() {
+	bunny.xVel = 0.0;
+    bg.xVel = 0.0;
+    bg2.xVel = 0.0;
+    bg3.xVel = 0.0;
+//If the left arrow has been released, and the right arrow isn't down,
+//and the cat isn't moving vertically:
+//Stop the cat
+
+};
+
+//Up
+up.press = function() {
+	if (!jumping) {
+		bunny.yVel = -12.0;
+		jumping = true;
+	}
+};
+up.release = function() {
+
+};
+
+//Right
+right.press = function() {
+	bunny.xVel = 0.0;
+    bg.xVel = 2;
+    bg2.xVel = 8;
+    bg3.xVel = 5;
+};
+right.release = function() {
+	bunny.xVel = 0.0;
+    bg.xVel = 0.0;
+    bg2.xVel = 0.0;
+    bg3.xVel = 0.0;
+};
+
+//Down
+down.press = function() {
+
+};
+down.release = function() {
+
+};
+
 // start animating
 animate();
 
@@ -136,9 +199,6 @@ function keyboard(keyCode) {
   return key;
 }
 
-	var isLeft = false;
-	var isRight = false;
-
 function animate() {
     requestAnimationFrame(animate);
 
@@ -165,68 +225,7 @@ function animate() {
     bg3.position.x -= bg3.xVel;
 
 
-	//Capture the keyboard arrow keys
-	var left = keyboard(37),
-	  up = keyboard(38),
-	  right = keyboard(39),
-	  down = keyboard(40);
 
-
-	//Left arrow key `press` method
-	left.press = function() {
-		bunny.xVel = 0.0;
-	    bg.xVel = -2.0;
-	    bg2.xVel = -8.0;
-	    bg3.xVel = -5.0;
-
-	//Change the cat's velocity when the key is pressed
-	
-	};
-
-	//Left arrow key `release` method
-	left.release = function() {
-		bunny.xVel = 0.0;
-	    bg.xVel = 0.0;
-	    bg2.xVel = 0.0;
-	    bg3.xVel = 0.0;
-	//If the left arrow has been released, and the right arrow isn't down,
-	//and the cat isn't moving vertically:
-	//Stop the cat
-
-	};
-
-	//Up
-	up.press = function() {
-		if (!jumping) {
-			bunny.yVel = -12.0;
-			jumping = true;
-		}
-	};
-	up.release = function() {
-
-	};
-
-	//Right
-	right.press = function() {
-		bunny.xVel = 0.0;
-	    bg.xVel = 2;
-	    bg2.xVel = 8;
-	    bg3.xVel = 5;
-	};
-	right.release = function() {
-		bunny.xVel = 0.0;
-	    bg.xVel = 0.0;
-	    bg2.xVel = 0.0;
-	    bg3.xVel = 0.0;
-	};
-
-	//Down
-	down.press = function() {
-
-	};
-	down.release = function() {
-
-	};
 
 	// console.log(bunny.xVel);
 
