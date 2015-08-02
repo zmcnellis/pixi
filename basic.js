@@ -70,9 +70,18 @@ bunny.scale.x = 0.4;
 bunny.scale.y = 0.4;
 
 bunny.xVel = 0.0;
+bunny.yVel = 0.0;
+bg.xVel = 0.0;
+bg2.xVel = 0.0;
+bg3.xVel = 0.0;
 
 bg2.position.y = h-160;
 bg3.position.y = h-960;
+
+// starting position
+bg.position.x = -800;
+bg2.position.x = -800;
+bg3.position.x = -800;
 
 myContainer.addChild(bg);
 myContainer.addChild(bg3);
@@ -80,7 +89,12 @@ myContainer.addChild(bg2);
 myContainer.addChild(basicText);
 myContainer.addChild(bunny);
 
+var gravity = 0.5;
+var jumping = false;
+
 stage.addChild(myContainer);
+
+var startTime = Date.now();
 
 // start animating
 animate();
@@ -128,10 +142,28 @@ function keyboard(keyCode) {
 function animate() {
     requestAnimationFrame(animate);
 
+    var currTime = Date.now();
+    var elapsedTime = currTime - startTime;
+    console.log(parseInt(elapsedTime/1000));
+
+    if (jumping) {
+    	if (bunny.position.y > h-100) {
+    		bunny.position.y = h-100;
+    		bunny.yVel = 0;
+    		jumping = false;
+    	}
+    	else {
+    		bunny.yVel += gravity;
+    	}
+	}
+
     bunny.position.x += bunny.xVel;
-    bg.position.x -= 2;
-    bg2.position.x -= 8;
-    bg3.position.x -= 5;
+    bunny.position.y += bunny.yVel;
+
+    bg.position.x -= bg.xVel;
+    bg2.position.x -= bg2.xVel;
+    bg3.position.x -= bg3.xVel;
+
 
 	//Capture the keyboard arrow keys
 	var left = keyboard(37),
@@ -142,14 +174,21 @@ function animate() {
 
 	//Left arrow key `press` method
 	left.press = function() {
-			bunny.xVel = -2.0;
+		bunny.xVel = 0.0;
+	    bg.xVel = -2.0;
+	    bg2.xVel = -8.0;
+	    bg3.xVel = -5.0;
+
 	//Change the cat's velocity when the key is pressed
 	
 	};
 
 	//Left arrow key `release` method
 	left.release = function() {
-			bunny.xVel = 0.0;
+		bunny.xVel = 0.0;
+	    bg.xVel = 0.0;
+	    bg2.xVel = 0.0;
+	    bg3.xVel = 0.0;
 	//If the left arrow has been released, and the right arrow isn't down,
 	//and the cat isn't moving vertically:
 	//Stop the cat
@@ -158,7 +197,10 @@ function animate() {
 
 	//Up
 	up.press = function() {
-	
+		if (!jumping) {
+			bunny.yVel = -12.0;
+			jumping = true;
+		}
 	};
 	up.release = function() {
 
@@ -166,10 +208,16 @@ function animate() {
 
 	//Right
 	right.press = function() {
-			bunny.xVel = 2.0;
+		bunny.xVel = 0.0;
+	    bg.xVel = 2;
+	    bg2.xVel = 8;
+	    bg3.xVel = 5;
 	};
 	right.release = function() {
-			bunny.xVel = 0.0;
+		bunny.xVel = 0.0;
+	    bg.xVel = 0.0;
+	    bg2.xVel = 0.0;
+	    bg3.xVel = 0.0;
 	};
 
 	//Down
