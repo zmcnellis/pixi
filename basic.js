@@ -58,6 +58,10 @@ var basicText = new PIXI.Text('Zachary McNellis', style);
 basicText.x = 30;
 basicText.y = 0;
 
+var timeText = new PIXI.Text('0');
+timeText.x = w-60;
+timeText.y = 0;
+
 // center the sprite's anchor point
 bunny.anchor.x = 0.5;
 bunny.anchor.y = 0.5;
@@ -87,6 +91,7 @@ myContainer.addChild(bg);
 myContainer.addChild(bg3);
 myContainer.addChild(bg2);
 myContainer.addChild(basicText);
+myContainer.addChild(timeText);
 myContainer.addChild(bunny);
 
 var gravity = 0.5;
@@ -204,7 +209,7 @@ function animate() {
 
     var currTime = Date.now();
     var elapsedTime = currTime - startTime;
-    console.log(parseInt(elapsedTime/1000));
+    timeText.setText(parseInt(elapsedTime/1000));
 
     if (jumping) {
     	if (bunny.position.y > h-100) {
